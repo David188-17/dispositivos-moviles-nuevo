@@ -13,7 +13,7 @@ class LugarViewModel(application: Application) : AndroidViewModel(application) {
     private val lugarRepository: LugarRepository= LugarRepository(LugarDao())
     val getLugares: MutableLiveData<List<Lugar>> = lugarRepository.getLugares
 
-
+//....
 
 
     fun saveLugar(lugar: Lugar) {

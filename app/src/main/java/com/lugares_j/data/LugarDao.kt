@@ -117,7 +117,7 @@ val listaLugares = MutableLiveData<List<Lugar>>()
                     }
                     listaLugares.value = lista
                 }
-            }
+            }//**
         return listaLugares
 
 

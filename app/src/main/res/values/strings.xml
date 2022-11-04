@@ -24,7 +24,7 @@
     <string name="msg_firebase_add">lugar agregado</string>
     <string name="msg_firebase_update">lugar actualizado</string>
 
-
+//**
     <string name="msg_firebase_delete">lugar eliminado</string>
 
     <string name="msg_firebase_no_add">ERROR: lugar no eliminado</string>

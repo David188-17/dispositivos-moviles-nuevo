@@ -11,7 +11,7 @@ data class Lugar(
     var id:String,
 
     val nombre: String,
-
+//
     val correo: String?,
 
     val telefono: String?,
