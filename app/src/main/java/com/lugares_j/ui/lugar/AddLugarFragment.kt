@@ -45,7 +45,7 @@ class AddLugarFragment : Fragment() {
             val lugar = Lugar("",nombre,correo,telefono,web,
                 0.0,0.0,0.0,"","")
 
-            //Se procede a registrar el nuevo lugar...
+            //Se procede a registrar el nuevo lugar..............
             lugarViewModel.saveLugar(lugar)
             Toast.makeText(requireContext(),
                 getString(R.string.msg_lugar_added),
