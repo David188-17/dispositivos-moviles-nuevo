@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10sp"
-    tools:context=".ui.lugar.AddLugarFragment" >
+
+    tools:context=".ui.lugar.AddLugarFragment">
+
+    <LinearLayout
+android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10sp">
 
     <EditText
         android:id="@+id/etNombre"
@@ -51,9 +56,11 @@
         android:elevation="25sp"
         android:padding="10sp"
         android:stretchColumns="*">
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
                 android:id="@+id/tv_latitud1"
                 android:layout_width="0dp"
@@ -63,6 +70,7 @@
                 android:text="@string/tv_latitud_lb"
                 android:textSize="22sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/tv_longitud1"
                 android:layout_width="0dp"
@@ -72,6 +80,7 @@
                 android:text="@string/tv_longitud_lb"
                 android:textSize="22sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/tv_altura1"
                 android:layout_width="0dp"
@@ -82,9 +91,11 @@
                 android:textSize="22sp"
                 android:textStyle="bold" />
         </TableRow>
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
                 android:id="@+id/tv_latitud"
                 android:layout_width="0dp"
@@ -92,6 +103,7 @@
                 android:layout_weight="1"
                 android:gravity="center|center_horizontal|center_vertical"
                 android:textSize="18sp" />
+
             <TextView
                 android:id="@+id/tv_longitud"
                 android:layout_width="0dp"
@@ -99,6 +111,7 @@
                 android:layout_weight="1"
                 android:gravity="center|center_horizontal|center_vertical"
                 android:textSize="18sp" />
+
             <TextView
                 android:id="@+id/tv_altura"
                 android:layout_width="0dp"
@@ -108,6 +121,7 @@
                 android:textSize="18sp" />
         </TableRow>
     </TableLayout>
+
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
@@ -122,9 +136,6 @@
         android:text=""
         android:textAlignment="center"
         android:visibility="gone" />
-
-
-
 
 
     <LinearLayout
@@ -188,12 +199,13 @@
             android:src="@drawable/ic_rotate_r" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imagen"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:contentDescription="@string/msg_imagen"
-        android:scaleType="centerInside"
-        tools:ignore="ImageContrastCheck"
-        tools:src="@tools:sample/backgrounds/scenic" />
-</LinearLayout>
+        <ImageView
+            android:id="@+id/imagen"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:contentDescription="@string/msg_imagen"
+            android:scaleType="centerInside"
+            tools:ignore="ImageContrastCheck"
+            tools:src="@tools:sample/backgrounds/scenic" />
+    </LinearLayout>
+</ScrollView>

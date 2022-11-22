@@ -2,18 +2,32 @@ package com.lugares_j.ui.lugar
 
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.dynamic.IFragmentWrapper
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
+import com.lugares.utiles.AudioUtiles
+import com.lugares.utiles.ImagenUtiles
 
 import com.lugares_j.R
 import com.lugares_j.databinding.FragmentAddLugarBinding
@@ -28,6 +42,9 @@ class AddLugarFragment : Fragment() {
 
     private var _binding: FragmentAddLugarBinding? = null
     private val binding get() = _binding!!
+private lateinit var  audioUtiles: AudioUtiles
+    private lateinit var imagenUtiles: ImagenUtiles
+    private lateinit var tomarFotoActivity:ActivityResultLauncher<Intent>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,14 +56,104 @@ class AddLugarFragment : Fragment() {
         _binding = FragmentAddLugarBinding.inflate(inflater, container, false)
 
         binding.btAdd.setOnClickListener { addLugar() }
+binding.progressBar.visibility =ProgressBar.VISIBLE
+        binding.msgMensaje.text= getString(R.string.msg_subiendo_audio)
+        binding.msgMensaje.visibility =TextView.VISIBLE
+  subeNota()
 
-        activaGPS()
+audioUtiles = AudioUtiles(
+    requireActivity(),
+    requireContext(),
+    binding.btAccion,
+    binding.btPlay,
+    binding.btDelete,
+    getString(R.string.msg_graba_audio),
+    getString(R.string.msg_detener_audio))
 
+
+
+        tomarFotoActivity= registerForActivityResult(
+
+            ActivityResultContracts.StartActivityForResult()){
+            if (it.resultCode == Activity.RESULT_OK){
+                imagenUtiles.actualizaFoto()
+            }
+        }
+
+        imagenUtiles= ImagenUtiles(requireContext(),
+        binding.btPhoto, binding.btRotaL, binding.btRotaR, binding.imagen,
+        tomarFotoActivity)
 
 
 
         return binding.root
     }
+
+    private fun subeNota() {
+       val archivoLocal =audioUtiles.audioFile
+        if (archivoLocal.exists()&&
+                archivoLocal.isFile&&
+                archivoLocal.canRead()){
+
+            // se fija la ruta (uri ) del archivoLocal de audio
+            val rutaLocal = Uri.fromFile(archivoLocal)
+
+            //se establece la ruta en la nube
+            val rutaNube = "lugaresApp/${Firebase.auth.currentUser?.email}/audios/${archivoLocal.name}"
+            val referencia: StorageReference =Firebase.storage.reference.child(rutaNube)
+
+            referencia.putFile(rutaLocal)
+                .addOnSuccessListener {
+                    referencia.downloadUrl
+                        .addOnSuccessListener {
+                            val rutaAudio = it.toString()
+                            subeImagen(rutaAudio)
+                        }
+
+                }
+                .addOnFailureListener{
+                    subeImagen("")
+                }
+        }else{ // no hay foto
+subeImagen("")
+        }
+    }
+
+    private fun subeImagen(rutaAudio: String) {
+        binding.msgMensaje.text = getString(R.string.msg_subiendo_imagen)
+
+        val archivoLocal =imagenUtiles.imagenFile
+        if (archivoLocal.exists()&&
+            archivoLocal.isFile&&
+            archivoLocal.canRead()){
+
+            // se fija la ruta (uri ) del archivoLocal de audio
+            val rutaLocal = Uri.fromFile(archivoLocal)
+
+            //se establece la ruta en la nube
+            val rutaNube = "lugaresApp/${Firebase.auth.currentUser?.email}/audios/${archivoLocal.name}"
+            val referencia: StorageReference =Firebase.storage.reference.child(rutaNube)
+
+            referencia.putFile(rutaLocal)
+                .addOnSuccessListener {
+                    referencia.downloadUrl
+                        .addOnSuccessListener {
+                            val rutaAudio = it.toString()
+                            subeImagen(rutaAudio)
+                        }
+
+                }
+                .addOnFailureListener{
+                    subeImagen("")
+                }
+        }else{ // no hay foto
+            subeImagen("")
+        }
+    }
+
+
+
+
 
     private fun activaGPS() {
         if (requireActivity()
