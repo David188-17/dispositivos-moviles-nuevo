@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Lugares_j</string>
     <string name="tv_correo">Correo</string>
@@ -24,7 +25,7 @@
     <string name="msg_firebase_add">lugar agregado</string>
     <string name="msg_firebase_update">lugar actualizado</string>
 
-//**
+    //**
     <string name="msg_firebase_delete">lugar eliminado</string>
 
     <string name="msg_firebase_no_add">ERROR: lugar no eliminado</string>
@@ -66,6 +67,5 @@
     <string name="msg_subiendo_audio">Subiendo Nota Audio</string>
     <string name="msg_subiendo_imagen">Subiendo imagen</string>
     <string name="msg_subiendo_lugar">Subiendo lugar</string>
-    <string name="default_web_client_idr" translatable="false">736393485175-oavqo51beml01nnpb0cupu13b4uu6o3m.apps.googleusercontent.com</string>
     <string name="todo" />
 </resources>
